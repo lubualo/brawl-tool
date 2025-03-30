@@ -2,8 +2,9 @@
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { trophyFormSchema } from "@utils/validation";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
 	Form,
 	FormControl,
@@ -12,30 +13,23 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import TrophyCalculatorService from "@/utils/trophyCalculatorService";
 
-const formSchema = z.object({
-    winStreak: z.preprocess(
-      (value) => (typeof value === "string" ? parseInt(value, 10) : value),
-      z.number().int().nonnegative().finite().safe()
-    ),
-  });
+export default function TrophyCalculator() {
+	const [totalTrophies, setTotalTrophies] = useState<number>(8);
 
-export function TrophyCalculator() {
-	// 1. Define your form.
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof trophyFormSchema>>({
+		resolver: zodResolver(trophyFormSchema),
 		defaultValues: {
 			winStreak: 1,
 		},
 	});
 
-	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
+	function onSubmit(values: z.infer<typeof trophyFormSchema>) {
+		const service = new TrophyCalculatorService();
+		console.log(service.calculate(values.winStreak));
 	}
 
 	return (
@@ -48,7 +42,24 @@ export function TrophyCalculator() {
 						<FormItem>
 							<FormLabel>Win streak</FormLabel>
 							<FormControl>
-								<Input type="number" placeholder="Amount of straight wins" {...field} />
+								<Input
+									type="number"
+									placeholder="Enter win streak"
+									{...field}
+									onChange={(e) => {
+										const value = parseInt(
+											e.target.value,
+											10
+										);
+										field.onChange(e); // Sync with react-hook-form
+										if (!isNaN(value)) {
+                                            const service = new TrophyCalculatorService();
+											setTotalTrophies(
+												service.calculate(value)
+											);
+										}
+									}}
+								/>
 							</FormControl>
 							<FormDescription>
 								Insert the amount of straight wins.
@@ -57,7 +68,7 @@ export function TrophyCalculator() {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<h1>{totalTrophies}</h1>
 			</form>
 		</Form>
 	);
