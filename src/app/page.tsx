@@ -1,23 +1,27 @@
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardHeader,
 	CardTitle,
 } from "@components/ui/card";
-
+import Image from "next/image";
 import TrophyCalculator from "@components/TrophyCalculator";
 
 export default function Home() {
 	return (
 		<main>
-			<h1>Brawl Tool win streak Calculator</h1>
 			<Card className="w-[350px]">
-				<CardHeader>
-					<CardTitle>Create project</CardTitle>
-					<CardDescription>
-						Deploy your new project in one-click.
-					</CardDescription>
+				<CardHeader >
+					<CardTitle className="flex items-center gap-2 whitespace-nowrap">
+					<Image
+						src="/calc-icon.png"
+						alt="Calculator Icon"
+						width={24}
+						height={24}
+						className="inline-block"
+					/>
+					<span>Brawl Stars trophies calculator</span>
+					</CardTitle>
 				</CardHeader>
 				<CardContent>
 					<TrophyCalculator />
