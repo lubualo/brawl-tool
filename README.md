@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Certainly, Lucas! Here's a simple `README.md` template tailored for your "Brawl Tool" project. Feel free to modify it as needed.
 
-## Getting Started
+---
 
-First, run the development server:
+# Brawl Tool - Trophies Calculator
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Overview
+**Brawl Tool** is a React + Next.js application designed to calculate trophies dynamically for the popular game *Brawl Stars*. The tool allows players to determine trophies based on consecutive wins and vice versa, providing a simple, user-friendly interface.
+
+## Features
+- **Dynamic Updates:** Calculates trophies in real-time based on win streaks or desired trophy count.
+- **Customizable Inputs:** Enter either the win streak or the trophy target, and the tool automatically calculates the other field.
+- **Responsive UI:** Styled with Tailwind CSS and Shadcn components for a clean, modern look.
+- **Accessibility:** Designed with accessibility in mind using ARIA-friendly components.
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/lubualo/brawl-tool.git
+   cd brawl-tool
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open the app:
+   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+- Enter the **win streak** in the input field to calculate the total trophies earned.
+- Alternatively, enter the **desired trophy count** to determine the required win streak.
+- Results update dynamically without needing to submit!
+
+## Technologies Used
+- **React** with **Next.js**
+- **React Hook Form** for form management
+- **Zod** for schema validation
+- **Shadcn Components** for UI styling
+- **Tailwind CSS** for responsive styling
+
+## Folder Structure
+```
+src/
+├── app/                    // Next.js routes
+│   └── home/               // Home page logic
+├── components/             // Reusable React components
+│   ├── ui/                 // Shadcn UI components
+│   └── TrophyCalculator.tsx // Main calculator component
+├── styles/                 // Global styles (e.g., Tailwind)
+├── utils/                  // Calculation logic and validation
+│   └── trophyCalculatorService.ts // Trophy calculation functions
+│   └── validation.ts       // Zod schemas for form validation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
+Contributions are welcome! If you would like to enhance this project:
+1. Fork the repository.
+2. Create a new branch for your feature:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes and submit a pull request.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
+This project is licensed under the MIT License.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Let me know if you'd like additional sections or refinements! 😊✨
