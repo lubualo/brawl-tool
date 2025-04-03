@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trophyFormSchema } from "@utils/validation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import {
 	Form,
 	FormControl,
@@ -15,27 +14,25 @@ import {
 	FormMessage,
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
-import TrophyCalculatorService from "@/utils/trophyCalculatorService";
+import { calculateTrophies, calculateWinsRequired } from "@/utils/trophyCalculatorService";
 
 export default function TrophyCalculator() {
-	const [totalTrophies, setTotalTrophies] = useState<number>(8);
 
 	const form = useForm<z.infer<typeof trophyFormSchema>>({
 		resolver: zodResolver(trophyFormSchema),
 		defaultValues: {
 			winStreak: 1,
+			totalTrophies: 8,
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof trophyFormSchema>) {
-		const service = new TrophyCalculatorService();
-		console.log(service.calculate(values.winStreak));
+	function onSubmit() {
 	}
 
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				<FormField
+			<FormField
 					control={form.control}
 					name="winStreak"
 					render={({ field }) => (
@@ -46,29 +43,51 @@ export default function TrophyCalculator() {
 									type="number"
 									placeholder="Enter win streak"
 									{...field}
-									onChange={(e) => {
-										const value = parseInt(
-											e.target.value,
-											10
-										);
-										field.onChange(e); // Sync with react-hook-form
+									onChange={async (e) => {
+										const value = Math.max(0, parseInt(e.target.value, 10));
+										field.onChange(e);
 										if (!isNaN(value)) {
-                                            const service = new TrophyCalculatorService();
-											setTotalTrophies(
-												service.calculate(value)
-											);
+											form.setValue("totalTrophies", calculateTrophies(value));
+											await form.trigger("winStreak")
 										}
 									}}
 								/>
 							</FormControl>
 							<FormDescription>
-								Insert the amount of straight wins.
+								Insert the amount of consecutive victories.
 							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<h1>{totalTrophies}</h1>
+				<FormField
+					control={form.control}
+					name="totalTrophies"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Trophies</FormLabel>
+							<FormControl>
+								<Input
+									type="number"
+									placeholder="Enter amount of trophies"
+									{...field}
+									onChange={async(e) => {
+										const value = Math.max(0, parseInt(e.target.value, 10));
+										field.onChange(e); // Sync with react-hook-form
+										if (!isNaN(value)) {
+											form.setValue("winStreak", calculateWinsRequired(value));
+											await form.trigger("totalTrophies")
+										}
+									}}
+								/>
+							</FormControl>
+							<FormDescription>
+								Insert the amount of desired trophies.
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 			</form>
 		</Form>
 	);
