@@ -14,7 +14,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { calculateTrophies, calculateWinsRequired } from "@/utils/TrophyCalculatorService";
+import { TrophyCalculatorService } from "@/utils/TrophyCalculatorService";
 
 export default function TrophyCalculator() {
 
@@ -47,7 +47,7 @@ export default function TrophyCalculator() {
 										const value = Math.max(0, parseInt(e.target.value, 10));
 										field.onChange(e);
 										if (!isNaN(value)) {
-											form.setValue("totalTrophies", calculateTrophies(value));
+											form.setValue("totalTrophies", TrophyCalculatorService.calculateTrophies(value));
 											await form.trigger("winStreak")
 										}
 									}}
@@ -75,7 +75,7 @@ export default function TrophyCalculator() {
 										const value = Math.max(0, parseInt(e.target.value, 10));
 										field.onChange(e); // Sync with react-hook-form
 										if (!isNaN(value)) {
-											form.setValue("winStreak", calculateWinsRequired(value));
+											form.setValue("winStreak", TrophyCalculatorService.calculateWinsRequired(value));
 											await form.trigger("totalTrophies")
 										}
 									}}
