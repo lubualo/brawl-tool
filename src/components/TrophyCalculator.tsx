@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { trophyFormSchema } from "@utils/validation";
+import { trophyFormSchema } from "@/utils/validation";
 import { useForm } from "react-hook-form";
 import {
 	Form,
@@ -12,9 +12,9 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@components/ui/form";
-import { Input } from "@components/ui/input";
-import { calculateTrophies, calculateWinsRequired } from "@/utils/trophyCalculatorService";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { calculateTrophies, calculateWinsRequired } from "@/utils/TrophyCalculatorService";
 
 export default function TrophyCalculator() {
 
