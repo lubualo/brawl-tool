@@ -16,7 +16,7 @@ export default function NavigationMenu() {
   return (
     <NavigationMenuShadcn>
       <NavigationMenuList>
-        <NavigationMenuItem>
+        <NavigationMenuItem className="pl-4">
             <Image
                 src="/brawl-stars-logo.svg"
                 alt="Brawl Stars logo"

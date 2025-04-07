@@ -7,8 +7,13 @@ import { LevelIUpCalculatorService } from "@/utils/LevelIUpCalculatorService";
 import Image from "next/image";
 
 export default function LevelUpCalculator() {
+	const starPowerCost = 2000;
+	const gadgetCost = 1000;
+
 	const [initialLevel, setInitialLevel] = useState(1);
 	const [targetLevel, setTargetLevel] = useState(11);
+	const [starPowers, setStarPowers] = useState(0);
+	const [gadgets, setGadgets] = useState(0);
 
 	return (
 		<>
@@ -19,9 +24,7 @@ export default function LevelUpCalculator() {
 					</div>
 					<LevelSelector
 						level={initialLevel}
-						onLevelChange={(newLevel: number) =>
-							setInitialLevel(newLevel)
-						}
+						onLevelChange={(newLevel: number) => setInitialLevel(newLevel) }
 						min={1}
 						max={targetLevel - 1}
 					/>
@@ -32,11 +35,33 @@ export default function LevelUpCalculator() {
 					</div>
 					<LevelSelector
 						level={targetLevel}
-						onLevelChange={(newLevel: number) =>
-							setTargetLevel(newLevel)
-						}
+						onLevelChange={(newLevel: number) => setTargetLevel(newLevel) }
 						min={initialLevel + 1}
 						max={11}
+					/>
+				</div>
+			</div>
+			<div className="flex w-full pb-4">
+				<div className="basis-1/2">
+					<div className="text-sm text-center font-bold pb-1">
+						Star powers
+					</div>
+					<LevelSelector
+						level={starPowers}
+						onLevelChange={(newLevel: number) => setStarPowers(newLevel) }
+						min={0}
+						max={2}
+					/>
+				</div>
+				<div className="basis-1/2">
+					<div className="text-sm text-center font-bold pb-1">
+						Gadgets
+					</div>
+					<LevelSelector
+						level={gadgets}
+						onLevelChange={(newLevel: number) => setGadgets(newLevel) }
+						min={0}
+						max={2}
 					/>
 				</div>
 			</div>
@@ -45,10 +70,11 @@ export default function LevelUpCalculator() {
 				<div className="basis-1/2 text-center">
 					<div className="text-sm font-bold pb-1">Coins</div>
                     <div className="flex items-center justify-center text-l">
-						{LevelIUpCalculatorService.calculateCoinCost(
-							initialLevel,
-							targetLevel
-						)}
+						{
+							LevelIUpCalculatorService.calculateCoinCost( initialLevel, targetLevel )
+							+ starPowers * starPowerCost
+							+ gadgets * gadgetCost
+							}
 						<Image
 							src="/coin-icon.svg"
 							alt="Coins icon"
@@ -61,10 +87,7 @@ export default function LevelUpCalculator() {
 				<div className="basis-1/2 text-center">
 					<div className="text-sm font-bold pb-1">Power points</div>
                     <div className="flex items-center justify-center text-l">
-						{LevelIUpCalculatorService.calculatePowerPoints(
-							initialLevel,
-							targetLevel
-						)}
+						{LevelIUpCalculatorService.calculatePowerPoints( initialLevel, targetLevel )}
 						<Image
 							src="/power-point-icon.svg"
 							alt="Power points icon"
