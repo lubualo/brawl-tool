@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LevelSelector from "@/components/LevelSelector";
 import { Separator } from "@/components/ui/separator";
 import { LevelIUpCalculatorService } from "@/utils/LevelIUpCalculatorService";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
+export type LevelUpCost = {
+	coins: number;
+	powerPoints: number;
+};
 
-export default function LevelUpCalculator() {
+export type LevelUpCalculatorProps = {
+	onLevelUpCostChange: (cost: LevelUpCost) => void; // Callback for when the cost changes
+};
+
+export default function LevelUpCalculator({
+	onLevelUpCostChange,
+}: LevelUpCalculatorProps) {
 	const starPowerCost = 2000;
 	const gadgetCost = 1000;
 	const gearCost = 1000;
@@ -15,14 +25,32 @@ export default function LevelUpCalculator() {
 	const mythicGearCost = 2000;
 	const hyperchargeCost = 5000;
 
-	const [initialLevel, setInitialLevel] = useState(1);
-	const [targetLevel, setTargetLevel] = useState(11);
-	const [starPowers, setStarPowers] = useState(0);
-	const [gadgets, setGadgets] = useState(0);
-	const [gears, setGears] = useState(0);
-	const [epicGears, setEpicGears] = useState(0);
-	const [mythicGears, setMythicGears] = useState(0);
-	const [hypercharge, setHypercharge] = useState(0);
+	const [initialLevel, setInitialLevel] = useState<number>(1);
+	const [targetLevel, setTargetLevel] = useState<number>(11);
+	const [starPowers, setStarPowers] = useState<number>(0);
+	const [gadgets, setGadgets] = useState<number>(0);
+	const [gears, setGears] = useState<number>(0);
+	const [epicGears, setEpicGears] = useState<number>(0);
+	const [mythicGears, setMythicGears] = useState<number>(0);
+	const [hypercharge, setHypercharge] = useState<number>(0);
+
+	useEffect(() => {
+		const coins =
+		  LevelIUpCalculatorService.calculateCoinCost(initialLevel, targetLevel) +
+		  starPowers * starPowerCost +
+		  gadgets * gadgetCost +
+		  gears * gearCost +
+		  epicGears * epicGearCost +
+		  mythicGears * mythicGearCost +
+		  hypercharge * hyperchargeCost;
+	  
+		const powerPoints = LevelIUpCalculatorService.calculatePowerPoints(
+		  initialLevel,
+		  targetLevel
+		);
+	  
+		onLevelUpCostChange({ coins, powerPoints });
+	  }, [initialLevel, targetLevel, starPowers, gadgets, gears, epicGears, mythicGears, hypercharge, onLevelUpCostChange]);
 
 	return (
 		<>
@@ -149,7 +177,12 @@ export default function LevelUpCalculator() {
 						/>
 					</div>
 					<div className="flex justify-center">
-						<Switch id="hypercharge" onCheckedChange={(checked) => setHypercharge(checked ? 1 : 0)}/>
+						<Switch
+							id="hypercharge"
+							onCheckedChange={(checked) =>
+								setHypercharge(checked ? 1 : 0)
+							}
+						/>
 					</div>
 				</div>
 				<div className="basis-1/2">
@@ -178,7 +211,10 @@ export default function LevelUpCalculator() {
 				<div className="basis-1/2 text-center">
 					<div className="text-sm font-bold pb-1">Coins</div>
 					<div className="flex items-center justify-center text-l">
-						{LevelIUpCalculatorService.calculateCoinCost( initialLevel, targetLevel ) +
+						{LevelIUpCalculatorService.calculateCoinCost(
+							initialLevel,
+							targetLevel
+						) +
 							starPowers * starPowerCost +
 							gadgets * gadgetCost +
 							gears * gearCost +
