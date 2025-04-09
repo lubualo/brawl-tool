@@ -33,8 +33,8 @@ export default function PossibleLevelUpsCalculator({
 					<div className="text-sm font-bold pb-1">Coins</div>
 					<div className="flex items-center justify-center text-l">
 						<Input
+							className="w-[6rem]"
 							type="number"
-							placeholder="Your coins"
 							max={1000000}
 							min={0}
 							onChange={(e) =>
@@ -54,8 +54,8 @@ export default function PossibleLevelUpsCalculator({
 					<div className="text-sm font-bold pb-1">Power points</div>
 					<div className="flex items-center justify-center text-l">
 						<Input
+							className="w-[6rem]"
 							type="number"
-							placeholder="Your power points"
 							max={1000000}
 							min={0}
 							onChange={(e) =>

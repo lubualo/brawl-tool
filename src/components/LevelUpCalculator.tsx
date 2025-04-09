@@ -10,6 +10,7 @@ export type LevelUpCost = {
 	coins: number;
 	powerPoints: number;
 };
+import { Input } from "@/components/ui/input";
 
 export type LevelUpCalculatorProps = {
 	onLevelUpCostChange: (cost: LevelUpCost) => void; // Callback for when the cost changes
@@ -33,24 +34,38 @@ export default function LevelUpCalculator({
 	const [epicGears, setEpicGears] = useState<number>(0);
 	const [mythicGears, setMythicGears] = useState<number>(0);
 	const [hypercharge, setHypercharge] = useState<number>(0);
+	const [numberOfBrawlers, setNumberOfBrawlers] = useState<number>(1);
 
 	useEffect(() => {
 		const coins =
-		  LevelIUpCalculatorService.calculateCoinCost(initialLevel, targetLevel) +
-		  starPowers * starPowerCost +
-		  gadgets * gadgetCost +
-		  gears * gearCost +
-		  epicGears * epicGearCost +
-		  mythicGears * mythicGearCost +
-		  hypercharge * hyperchargeCost;
-	  
+			LevelIUpCalculatorService.calculateCoinCost(
+				initialLevel,
+				targetLevel
+			) +
+			starPowers * starPowerCost +
+			gadgets * gadgetCost +
+			gears * gearCost +
+			epicGears * epicGearCost +
+			mythicGears * mythicGearCost +
+			hypercharge * hyperchargeCost;
+
 		const powerPoints = LevelIUpCalculatorService.calculatePowerPoints(
-		  initialLevel,
-		  targetLevel
+			initialLevel,
+			targetLevel
 		);
-	  
+
 		onLevelUpCostChange({ coins, powerPoints });
-	  }, [initialLevel, targetLevel, starPowers, gadgets, gears, epicGears, mythicGears, hypercharge, onLevelUpCostChange]);
+	}, [
+		initialLevel,
+		targetLevel,
+		starPowers,
+		gadgets,
+		gears,
+		epicGears,
+		mythicGears,
+		hypercharge,
+		onLevelUpCostChange,
+	]);
 
 	return (
 		<>
@@ -207,20 +222,39 @@ export default function LevelUpCalculator({
 				</div>
 			</div>
 			<Separator className="mb-4" />
+			<div className="text-sm pb-4">
+				<div className="text-sm pb-4">
+					<span>For </span>
+					<Input
+						type="number"
+						value={numberOfBrawlers}
+						className="inline-block w-[4rem]"
+						max={999}
+						onChange={(e) => {
+							const newValue = parseInt(e.target.value, 10);
+							setNumberOfBrawlers(
+								newValue > 999 ? 999 : newValue
+							);
+						}}
+					/>
+					<span> brawlers:</span>
+				</div>
+			</div>
 			<div className="flex w-full pb-4">
 				<div className="basis-1/2 text-center">
 					<div className="text-sm font-bold pb-1">Coins</div>
 					<div className="flex items-center justify-center text-l">
-						{LevelIUpCalculatorService.calculateCoinCost(
-							initialLevel,
-							targetLevel
-						) +
-							starPowers * starPowerCost +
-							gadgets * gadgetCost +
-							gears * gearCost +
-							epicGears * epicGearCost +
-							mythicGears * mythicGearCost +
-							hypercharge * hyperchargeCost}
+						{numberOfBrawlers *
+							(LevelIUpCalculatorService.calculateCoinCost(
+								initialLevel,
+								targetLevel
+							) +
+								starPowers * starPowerCost +
+								gadgets * gadgetCost +
+								gears * gearCost +
+								epicGears * epicGearCost +
+								mythicGears * mythicGearCost +
+								hypercharge * hyperchargeCost)}
 						<Image
 							src="/coin-icon.svg"
 							alt="Coins icon"
@@ -233,10 +267,11 @@ export default function LevelUpCalculator({
 				<div className="basis-1/2 text-center">
 					<div className="text-sm font-bold pb-1">Power points</div>
 					<div className="flex items-center justify-center text-l">
-						{LevelIUpCalculatorService.calculatePowerPoints(
-							initialLevel,
-							targetLevel
-						)}
+						{numberOfBrawlers *
+							LevelIUpCalculatorService.calculatePowerPoints(
+								initialLevel,
+								targetLevel
+							)}
 						<Image
 							src="/power-point-icon.svg"
 							alt="Power points icon"
