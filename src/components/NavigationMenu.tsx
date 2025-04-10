@@ -38,6 +38,13 @@ export default function NavigationMenu() {
                 </NavigationMenuLink>
             </Link>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+            <Link href="/mastery-calculator" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Mastery calculator
+                </NavigationMenuLink>
+            </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenuShadcn>
   )
