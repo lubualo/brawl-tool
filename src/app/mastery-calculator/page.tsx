@@ -42,10 +42,10 @@ export default function Page() {
 						id="currentBrawlerTrophies"
 						max={99999}
 						onChange={(e) => {
-							const newValue = parseInt(e.target.value, 10);
-							setCurrentBrawlerTrophies(
-								newValue > 99999 ? 99999 : newValue
-							);
+							let newValue = parseInt(e.target.value, 10) || 0;
+							newValue = newValue > 99999 ? 99999 : newValue;
+							newValue = newValue < 0 ? 0 : newValue;
+							setCurrentBrawlerTrophies(newValue);
 						}}
 					/>
 				</div>
@@ -62,10 +62,10 @@ export default function Page() {
 						id="currentBrawlerMasteryPoints"
 						max={99999}
 						onChange={(e) => {
-							const newValue = parseInt(e.target.value, 10);
-							setCurrentBrawlerMasteryPoints(
-								newValue > 99999 ? 99999 : newValue
-							);
+							let newValue = parseInt(e.target.value, 10) || 0;
+							newValue = newValue > 99999 ? 99999 : newValue;
+							newValue = newValue < 0 ? 0 : newValue;
+							setCurrentBrawlerMasteryPoints(newValue);
 						}}
 					/>
 				</div>
@@ -82,10 +82,10 @@ export default function Page() {
 						id="targetBrawlerMasteryPoints"
 						max={99999}
 						onChange={(e) => {
-							const newValue = parseInt(e.target.value, 10);
-							setTargetBrawlerMasteryPoints(
-								newValue > 99999 ? 99999 : newValue
-							);
+							let newValue = parseInt(e.target.value, 10) || 0;
+							newValue = newValue > 99999 ? 99999 : newValue;
+							newValue = newValue < 0 ? 0 : newValue;
+							setTargetBrawlerMasteryPoints(newValue);
 						}}
 					/>
 				</div>
