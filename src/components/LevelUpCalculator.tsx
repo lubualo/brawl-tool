@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 const AMOUNT_OF_BRAWLERS = 100;
 
 export type LevelUpCalculatorProps = {
-	onLevelUpCostChange: (cost: LevelUpCost) => void; // Callback for when the cost changes
+	onLevelUpCostChange: (cost: LevelUpCost) => void;
 };
 
 export default function LevelUpCalculator({
