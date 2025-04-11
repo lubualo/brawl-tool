@@ -13,6 +13,9 @@ import { Separator } from "@/components/ui/separator";
 import { MasteryCalculatorService } from "@/utils/MasteryCalculatorService";
 import { useState } from "react";
 
+const MIN_MASTERY_POINTS = 0;
+const MAX_MASTERY_POINTS = 99999;
+
 export default function Page() {
 	const [currentBrawlerTrophies, setCurrentBrawlerTrophies] = useState(0);
 	const [currentBrawlerMasteryPoints, setCurrentBrawlerMasteryPoints] =
@@ -40,11 +43,14 @@ export default function Page() {
 						type="number"
 						value={currentBrawlerTrophies}
 						id="currentBrawlerTrophies"
-						max={99999}
 						onChange={(e) => {
 							let newValue = parseInt(e.target.value, 10) || 0;
-							newValue = newValue > 99999 ? 99999 : newValue;
-							newValue = newValue < 0 ? 0 : newValue;
+							if (newValue < MIN_MASTERY_POINTS) {
+								newValue = MIN_MASTERY_POINTS;
+							}
+							if (newValue > MAX_MASTERY_POINTS) {
+								newValue = MAX_MASTERY_POINTS;
+							}
 							setCurrentBrawlerTrophies(newValue);
 						}}
 					/>
@@ -60,11 +66,14 @@ export default function Page() {
 						type="number"
 						value={currentBrawlerMasteryPoints}
 						id="currentBrawlerMasteryPoints"
-						max={99999}
 						onChange={(e) => {
 							let newValue = parseInt(e.target.value, 10) || 0;
-							newValue = newValue > 99999 ? 99999 : newValue;
-							newValue = newValue < 0 ? 0 : newValue;
+							if (newValue < MIN_MASTERY_POINTS) {
+								newValue = MIN_MASTERY_POINTS;
+							}
+							if (newValue > MAX_MASTERY_POINTS) {
+								newValue = MAX_MASTERY_POINTS;
+							}
 							setCurrentBrawlerMasteryPoints(newValue);
 						}}
 					/>
@@ -80,11 +89,14 @@ export default function Page() {
 						type="number"
 						value={targetBrawlerMasteryPoints}
 						id="targetBrawlerMasteryPoints"
-						max={99999}
 						onChange={(e) => {
 							let newValue = parseInt(e.target.value, 10) || 0;
-							newValue = newValue > 99999 ? 99999 : newValue;
-							newValue = newValue < 0 ? 0 : newValue;
+							if (newValue < MIN_MASTERY_POINTS) {
+								newValue = MIN_MASTERY_POINTS;
+							}
+							if (newValue > MAX_MASTERY_POINTS) {
+								newValue = MAX_MASTERY_POINTS;
+							}
 							setTargetBrawlerMasteryPoints(newValue);
 						}}
 					/>

@@ -12,6 +12,8 @@ export type LevelUpCost = {
 };
 import { Input } from "@/components/ui/input";
 
+const AMOUNT_OF_BRAWLERS = 100;
+
 export type LevelUpCalculatorProps = {
 	onLevelUpCostChange: (cost: LevelUpCost) => void; // Callback for when the cost changes
 };
@@ -231,10 +233,14 @@ export default function LevelUpCalculator({
 						className="inline-block w-[4rem]"
 						max={999}
 						onChange={(e) => {
-							const newValue = parseInt(e.target.value, 10);
-							setNumberOfBrawlers(
-								newValue > 999 ? 999 : newValue
-							);
+							let newValue = parseInt(e.target.value, 10) || 0;
+							if (newValue < 0) {
+								newValue = 0;
+							}
+							if (newValue > AMOUNT_OF_BRAWLERS) {
+								newValue = AMOUNT_OF_BRAWLERS;
+							}
+							setNumberOfBrawlers(newValue);
 						}}
 					/>
 					<span> brawlers:</span>

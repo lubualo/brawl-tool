@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input";
 import { TrophyCalculatorService } from "@/utils/TrophyCalculatorService";
 
 export default function TrophyCalculator() {
-
 	const form = useForm<z.infer<typeof trophyFormSchema>>({
 		resolver: zodResolver(trophyFormSchema),
 		defaultValues: {
@@ -26,13 +25,12 @@ export default function TrophyCalculator() {
 		},
 	});
 
-	function onSubmit() {
-	}
+	function onSubmit() {}
 
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-			<FormField
+				<FormField
 					control={form.control}
 					name="winStreak"
 					render={({ field }) => (
